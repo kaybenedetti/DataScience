@@ -1,0 +1,60 @@
+Sub StockData():
+
+Dim VolumeTotal As Double
+VolumeTotal = 0
+Dim TickerName As String
+Dim SummaryTable As Integer
+Dim ws As Worksheet
+Dim LastRow As Long
+SummaryTable = 2
+
+
+
+For Each ws In Worksheets
+
+    LastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+
+    ws.Cells(1, 9).Value = "Ticker"
+    ws.Cells(1, 10).Value = "Ticker Total"
+    
+    ws.Range("J1").Interior.ColorIndex = 7
+    ws.Range("I1").Interior.ColorIndex = 17
+    
+SummaryTable = 2
+
+    For i = 2 To LastRow
+    
+        
+       If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+        
+         TickerName = ws.Cells(i, 1).Value
+        
+         VolumeTotal = VolumeTotal + ws.Cells(i, 7).Value
+         
+         ws.Range("J" & SummaryTable).Value = VolumeTotal
+         
+         ws.Range("I" & SummaryTable).Value = TickerName
+         
+         
+        SummaryTable = SummaryTable + 1
+        
+        
+         VolumeTotal = 0
+        
+        
+        Else
+        
+            VolumeTotal = VolumeTotal + ws.Cells(i, 7).Value
+            
+    
+        End If
+        
+      Next i
+      
+      
+      
+    Next ws
+    
+
+
+End Sub
